@@ -7,20 +7,26 @@ const { errorResponse } = require("../helpers/errorResponse");
 
 module.exports.addBucketImage = async (req, resp, next) => {
   const { size, location, key } = req.file;
-  const s3bucketmodal = new S3BucketModal({
-    file_name: key,
-    file_size: size,
-    file_key: key,
-    file_url: location,
+  const s3BucketModal = new S3BucketModal({
+    name: key,
+    size: size,
+    key: key,
+    url: location,
   });
-  await s3bucketmodal.save();
+  await s3BucketModal.save();
+
+  const bucketResponse = {
+    ...s3BucketModal.toObject(),
+    _id: undefined,
+  };
+
   return resp
     .status(STATUS.CREATED)
     .send(
       apiResponse(
         STATUS.CREATED,
         BUCKET_API.BUCKET_CREATE.message,
-        s3bucketmodal
+        bucketResponse
       )
     );
 };

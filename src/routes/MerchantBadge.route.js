@@ -3,10 +3,6 @@ const { body } = require("express-validator");
 
 const { createBadge } = require("../controllers/MerchantBadge.controller");
 
-// const {
-//   superadminAuthValidation,
-// } = require("../validators/SuperAdminTokenValidation");
-
 const { idValidation } = require("../middlewares/IdValidation");
 
 const { salesRangeValidation } = require("../validators/RangeValidators");

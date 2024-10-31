@@ -38,33 +38,34 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// RD ADMIN Routes Start
-app.use(PlaceRoutes);
-app.use(ROUTES.SUPER_ADMIN, CommissionTypeRoutes);
-// app.use(ROUTES.SUPER_ADMIN, ShopCategoriesRoutes);
-app.use(ROUTES.SUPER_ADMIN, ShopRoutes);
-app.use(ROUTES.SUPER_ADMIN, CommissionRoutes);
-app.use(ROUTES.SUPER_ADMIN, AdminCommissionRoutes);
-app.use(ROUTES.PRODUCT, ProductCategoriesRoutes);
-app.use(ROUTES.PRODUCT, ProductSubCategoriesRoutes);
-app.use(ROUTES.PRODUCT, ProductBrandRoutes);
+// // RD ADMIN Routes Start
+// app.use(PlaceRoutes);
+// app.use(ROUTES.SUPER_ADMIN, CommissionTypeRoutes);
+// // app.use(ROUTES.SUPER_ADMIN, ShopCategoriesRoutes);
+// app.use(ROUTES.SUPER_ADMIN, ShopRoutes);
+// app.use(ROUTES.SUPER_ADMIN, CommissionRoutes);
+// app.use(ROUTES.SUPER_ADMIN, AdminCommissionRoutes);
+// app.use(ROUTES.PRODUCT, ProductCategoriesRoutes);
+// app.use(ROUTES.PRODUCT, ProductSubCategoriesRoutes);
+// app.use(ROUTES.PRODUCT, ProductBrandRoutes);
 
-app.use(ROUTES.ROOT, superAdminAuthValidation, MerchantBadges);
-// RD ADMIN Routes End
+// // RD ADMIN Routes End
 
-// RD ADMIN AND SHOP ADMIN START
-app.use(ProductRoutes);
-// RD ADMIN AND SHOP ADMIN END
+// // RD ADMIN AND SHOP ADMIN START
+// app.use(ProductRoutes);
+// // RD ADMIN AND SHOP ADMIN END
 
-// ALL ACCESS ROUTES START
+// // ALL ACCESS ROUTES START
 
-app.use(CartRoutes);
-app.use(OrderRoutes);
-app.use(PaymentRoutes);
-app.use(ImageUploadRoutes);
-app.use(ProductRatingRoutes);
-// ALL ACCESS ROUTES END
+// app.use(CartRoutes);
+// app.use(OrderRoutes);
+// app.use(PaymentRoutes);
+// app.use(ImageUploadRoutes);
+// app.use(ProductRatingRoutes);
+// // ALL ACCESS ROUTES END
 
 app.use(ROUTES.ROOT, UserRoutes);
+app.use(ROUTES.ROOT, ImageUploadRoutes);
+app.use(ROUTES.ROOT, superAdminAuthValidation, MerchantBadges);
 
 app.listen(5000);

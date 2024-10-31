@@ -1,4 +1,4 @@
 {
-  "db": "mongodb://0.0.0.0:27017/rajabali-dowadji-store",
+  "db": "mongodb://0.0.0.0:27017/rajabalidowadjistore",
   "JwtPrivateKey": "Rajabali_Dowadji_Store"
 }

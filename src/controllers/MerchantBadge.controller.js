@@ -15,10 +15,18 @@ module.exports.createBadge = async (req, resp) => {
       image: image,
     });
     await badge.save();
+    const badgeResponse = {
+      ...badge.toObject(),
+      _id: undefined,
+    };
     return resp
       .status(STATUS.CREATED)
       .send(
-        apiResponse(STATUS.CREATED, SHOP_BAD_API.SHOP_BAD_CREATE.message, badge)
+        apiResponse(
+          STATUS.CREATED,
+          SHOP_BAD_API.SHOP_BAD_CREATE.message,
+          badgeResponse
+        )
       );
   } else {
     return resp
