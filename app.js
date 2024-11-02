@@ -6,7 +6,6 @@ var bodyParser = require("body-parser");
 
 // Routes Import Start
 const PlaceRoutes = require("./src/routes/Place.route");
-// const ShopCategoriesRoutes = require("./src/routes/ShopCategories.route");
 const ShopRoutes = require("./src/routes/Shop.route");
 const ProductCategoriesRoutes = require("./src/routes/ProductCategories.route");
 const ProductSubCategoriesRoutes = require("./src/routes/ProductSubCategories.route");
@@ -42,7 +41,6 @@ app.use(express.urlencoded({ extended: true }));
 // // RD ADMIN Routes Start
 // app.use(PlaceRoutes);
 // app.use(ROUTES.SUPER_ADMIN, CommissionTypeRoutes);
-// // app.use(ROUTES.SUPER_ADMIN, ShopCategoriesRoutes);
 // app.use(ROUTES.SUPER_ADMIN, ShopRoutes);
 // app.use(ROUTES.SUPER_ADMIN, CommissionRoutes);
 // app.use(ROUTES.SUPER_ADMIN, AdminCommissionRoutes);
@@ -71,5 +69,6 @@ app.use(ROUTES.ROOT, superAdminAuthValidation, ShopRoutes);
 app.use(ROUTES.ROOT, superAdminAuthValidation, PlaceRoutes);
 app.use(ROUTES.ROOT, superAdminAuthValidation, ShopProfile);
 app.use(ROUTES.ROOT, superAdminAuthValidation, MerchantBadges);
+app.use(ROUTES.ROOT, superAdminAuthValidation, ProductCategoriesRoutes);
 
 app.listen(5000);
