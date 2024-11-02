@@ -40,98 +40,78 @@ module.exports.createBadge = async (req, resp) => {
   }
 };
 
-// module.exports.getShopBadges = async (req, resp, next) => {
-//   const shopBadges = await MerchantBadgeModal.find({
-//     is_active: true,
-//     is_deleted: false,
-//   }).populate("badge_img");
-//   if (shopBadges) {
-//     return resp
-//       .status(STATUS.SUCCESS)
-//       .send(
-//         apiResponse(
-//           STATUS.SUCCESS,
-//           SHOP_BAD_API.SHOP_BAD_SUCCESS.message,
-//           shopBadges
-//         )
-//       );
-//   } else {
-//     return resp
-//       .status(STATUS.INTERNAL_SERVER)
-//       .send(errorResponse(STATUS.INTERNAL_SERVER, COMMON.SERVER_ERROR.message));
-//   }
-// };
+module.exports.updateBadge = async (req, resp) => {
+  const badgeId = req.params.id;
+  const { name, sales_min, sales_max, image } = req.body;
+  const badge = await MerchantBadgeModal.findOne({
+    id: badgeId,
+  });
+  if (badge) {
+    badge.name = name;
+    badge.sales_min = sales_min;
+    badge.sales_max = sales_max;
+    badge.image = image;
 
-// module.exports.getShopBadgeById = async (req, resp, next) => {
-//   const id = req.params.id;
-//   const shopBadge = await MerchantBadgeModal.findOne({
-//     id: id,
-//     is_active: true,
-//     is_deleted: false,
-//   }).populate("badge_img");
-//   if (shopBadge) {
-//     return resp
-//       .status(STATUS.SUCCESS)
-//       .send(
-//         apiResponse(
-//           STATUS.SUCCESS,
-//           SHOP_BAD_API.SHOP_BAD_SUCCESS.message,
-//           shopBadge
-//         )
-//       );
-//   } else {
-//     return resp
-//       .status(STATUS.INTERNAL_SERVER)
-//       .send(errorResponse(STATUS.INTERNAL_SERVER, COMMON.SERVER_ERROR.message));
-//   }
-// };
+    await badge.save();
 
-// module.exports.updateShopBadge = async (req, resp, next) => {
-//   const shopBadgeId = req.params.id;
-//   const { badge_name, min_range, max_range, badge_img } = req.body;
-//   const shopBadge = await MerchantBadgeModal.findOne({
-//     id: shopBadgeId,
-//     is_active: true,
-//     is_deleted: false,
-//   });
-//   if (shopBadge) {
-//     shopBadge.badge_name = badge_name;
-//     shopBadge.min_range = min_range;
-//     shopBadge.max_range = max_range;
-//     shopBadge.badge_img = badge_img;
-//     await shopBadge.save();
-//     return resp
-//       .status(STATUS.SUCCESS)
-//       .send(
-//         apiResponse(
-//           STATUS.SUCCESS,
-//           SHOP_BAD_API.SHOP_BAD_UPDATE.message,
-//           shopBadge
-//         )
-//       );
-//   } else {
-//     return resp
-//       .status(STATUS.BAD)
-//       .send(errorResponse(STATUS.BAD, SHOP_BAD_API.SHOP_BAD_INVALID.message));
-//   }
-// };
+    const badgeResponse = {
+      ...badge.toObject(),
+      _id: undefined,
+    };
 
-// module.exports.deleteShopBadge = async (req, resp, next) => {
-//   const shopBadgeId = req.params.id;
-//   const shopBadge = await MerchantBadgeModal.findOne({
-//     id: shopBadgeId,
-//     is_deleted: false,
-//   });
-//   if (shopBadge) {
-//     shopBadge.is_active = false;
-//     shopBadge.is_deleted = true;
-//     await shopBadge.save();
-//     return resp
-//       .status(STATUS.SUCCESS)
-//       .send(apiResponse(STATUS.SUCCESS, SHOP_BAD_API.SHOP_BAD_DELETE.message));
-//   } else {
-//     return resp
-//       .status(STATUS.BAD)
-//       .send(errorResponse(STATUS.BAD, SHOP_BAD_API.SHOP_BAD_NOT_FOUND.message));
-//   }
-// };
+    return resp
+      .status(STATUS.CREATED)
+      .send(
+        apiResponse(
+          STATUS.CREATED,
+          SHOP_BAD_API.SHOP_BAD_UPDATE.message,
+          badgeResponse
+        )
+      );
+  } else {
+    return resp
+      .status(STATUS.BAD)
+      .send(errorResponse(STATUS.BAD, SHOP_BAD_API.SHOP_BAD_NOT_FOUND.message));
+  }
+};
+
+module.exports.deleteBadge = async (req, resp, next) => {
+  const badgeId = req.params.id;
+  const badge = await MerchantBadgeModal.findOne({
+    id: badgeId,
+  });
+  if (badge) {
+    badge.activity = {
+      ...badge.activity,
+      is_deleted: true,
+      is_active: false,
+    };
+    await badge.save();
+    return resp
+      .status(STATUS.SUCCESS)
+      .send(apiResponse(STATUS.SUCCESS, SHOP_BAD_API.SHOP_BAD_DELETE.message));
+  } else {
+    return resp
+      .status(STATUS.BAD)
+      .send(errorResponse(STATUS.BAD, SHOP_BAD_API.SHOP_BAD_NOT_FOUND.message));
+  }
+};
+
+module.exports.getBadges = async (req, resp, next) => {
+  const badges = await MerchantBadgeModal.find();
+  if (badges) {
+    return resp
+      .status(STATUS.SUCCESS)
+      .send(
+        apiResponse(
+          STATUS.SUCCESS,
+          SHOP_BAD_API.SHOP_BAD_SUCCESS.message,
+          badges
+        )
+      );
+  } else {
+    return resp
+      .status(STATUS.INTERNAL_SERVER)
+      .send(errorResponse(STATUS.INTERNAL_SERVER, COMMON.SERVER_ERROR.message));
+  }
+};

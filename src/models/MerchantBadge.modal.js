@@ -50,7 +50,7 @@ MerchantBadgeSchema.pre("save", function (next) {
     this.id = this._id.toString();
   }
 
-  this.activity.update_at = new Date();
+  this.activity.updated_at = new Date();
 
   next();
 });

@@ -49,7 +49,7 @@ const userSchema = Schema(
         type: Date,
         default: Date.now,
       },
-      update_at: {
+      updated_at: {
         type: Date,
       },
       is_blocked: {
@@ -66,7 +66,7 @@ userSchema.pre("save", function (next) {
     this.id = this._id.toString();
   }
 
-  this.activity.update_at = new Date();
+  this.activity.updated_at = new Date();
 
   next();
 });
