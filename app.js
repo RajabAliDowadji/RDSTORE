@@ -23,6 +23,7 @@ const OrderRoutes = require("./src/routes/Order.route");
 const PaymentRoutes = require("./src/routes/Payment.route");
 
 const MerchantBadges = require("./src/routes/MerchantBadge.route");
+const ShopProfile = require("./src/routes/ShopProfile.route");
 // Routes Import End
 
 // Constant Import Start
@@ -66,6 +67,8 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(ROUTES.ROOT, UserRoutes);
 app.use(ROUTES.ROOT, ImageUploadRoutes);
+app.use(ROUTES.ROOT, superAdminAuthValidation, PlaceRoutes);
+app.use(ROUTES.ROOT, superAdminAuthValidation, ShopProfile);
 app.use(ROUTES.ROOT, superAdminAuthValidation, MerchantBadges);
 
 app.listen(5000);
