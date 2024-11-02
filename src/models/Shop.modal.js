@@ -3,79 +3,113 @@ const Schema = mongoose.Schema;
 
 const ShopSchema = Schema(
   {
-    shop_name: {
+    id: {
       type: String,
-      required: true,
     },
-    owner_name: {
-      type: String,
-      required: true,
-    },
-    email: {
-      type: String,
-      required: true,
-    },
-    phone_number: {
-      type: String,
-      required: true,
-    },
-    optional_number: {
-      type: String,
-      required: false,
-    },
-    aadhar_number: {
-      type: String,
-      required: true,
-    },
-    second_owner_name: {
-      type: String,
-      required: false,
-    },
-    second_owner_number: {
-      type: String,
-      required: false,
-    },
-    owner_image: {
+    shop_id: {
       type: Schema.Types.ObjectId,
-      ref: "file",
+      ref: "shop_profile",
       required: true,
     },
-    owner_aadhar_card: {
+    badge_id: {
       type: Schema.Types.ObjectId,
-      ref: "file",
+      ref: "badge",
       required: true,
     },
-    shop_image: {
-      type: Schema.Types.ObjectId,
-      ref: "file",
-      required: true,
+    numOrders: {
+      type: Number,
+      default: 0,
     },
-    address: {
+    numSales: {
+      type: Number,
+      default: 0,
+    },
+    numReturns: {
+      type: Number,
+      default: 0,
+    },
+    totalSales: {
+      type: Number,
+      default: 0,
+    },
+    totalDeductions: {
+      type: Number,
+      default: 0,
+    },
+    netEarnings: {
+      type: Number,
+      default: 0,
+    },
+    commissionAmount: {
+      type: Number,
+      default: 0,
+    },
+    currency: {
       type: String,
-      required: true,
+      default: "INR",
     },
-    place: {
-      type: Schema.Types.ObjectId,
-      ref: "place",
-      required: true,
+    orderRatios: {
+      type: "object",
+      properties: {
+        success: {
+          type: Number,
+          default: 0,
+        },
+        pending: {
+          type: Number,
+          default: 0,
+        },
+        canceled: {
+          type: Number,
+          default: 0,
+        },
+      },
     },
-    shop_category: {
-      type: Schema.Types.ObjectId,
-      ref: "shop_categories",
-      required: true,
-    },
-    isActive: {
-      type: Boolean,
-      required: false,
-      default: false,
-    },
-    isCompleted: {
-      type: Boolean,
-      required: false,
-      default: false,
+    transactions: [
+      {
+        amount: {
+          type: Number,
+        },
+        date: {
+          type: Date,
+        },
+        balanceBefore: {
+          type: Number,
+        },
+        balanceAfter: {
+          type: Number,
+        },
+      },
+    ],
+    activity: {
+      created_at: {
+        type: Date,
+        default: Date.now,
+      },
+      updated_at: {
+        type: Date,
+      },
+      is_active: {
+        type: Boolean,
+        default: true,
+      },
+      is_deleted: {
+        type: Boolean,
+        default: false,
+      },
     },
   },
-  { timestamps: true, versionKey: false }
+  { versionKey: false }
 );
+
+ShopSchema.pre("save", function (next) {
+  if (!this.id) {
+    this.id = this._id.toString();
+  }
+
+  this.activity.updated_at = new Date();
+
+  next();
+});
 
 module.exports = mongoose.model("shop", ShopSchema);

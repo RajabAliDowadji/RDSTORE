@@ -67,6 +67,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(ROUTES.ROOT, UserRoutes);
 app.use(ROUTES.ROOT, ImageUploadRoutes);
+app.use(ROUTES.ROOT, superAdminAuthValidation, ShopRoutes);
 app.use(ROUTES.ROOT, superAdminAuthValidation, PlaceRoutes);
 app.use(ROUTES.ROOT, superAdminAuthValidation, ShopProfile);
 app.use(ROUTES.ROOT, superAdminAuthValidation, MerchantBadges);
