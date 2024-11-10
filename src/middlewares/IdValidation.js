@@ -21,9 +21,9 @@ module.exports.idValidation = (req, resp, next) => {
 };
 
 module.exports.productCategoryValidation = async (req, resp, next) => {
-  const id = req.body.product_category;
+  const id = req.body.category;
   if (mongoose.isValidObjectId(id)) {
-    const prodCategory = await ProductCategoriesModal.findOne({ _id: id });
+    const prodCategory = await ProductCategoriesModal.findOne({ id: id });
     if (prodCategory) {
       next();
     } else {
@@ -47,7 +47,7 @@ module.exports.productSubCategoryValidation = async (req, resp, next) => {
   const id = req.body.product_sub_category;
   if (mongoose.isValidObjectId(id)) {
     const prodSubCategory = await ProductSubCategoriesModal.findOne({
-      _id: id,
+      id: id,
     });
     if (prodSubCategory) {
       next();
@@ -72,7 +72,7 @@ module.exports.productBrandValidation = async (req, resp, next) => {
   const id = req.body.product_brand;
   if (mongoose.isValidObjectId(id)) {
     const prodBrand = await ProductBrandModal.findOne({
-      _id: id,
+      id: id,
     });
     if (prodBrand) {
       next();
@@ -97,7 +97,7 @@ module.exports.productValidation = async (req, resp, next) => {
   const id = req.body.product;
   if (mongoose.isValidObjectId(id)) {
     const product = await ProductModal.findOne({
-      _id: id,
+      id: id,
     });
     if (product) {
       next();
@@ -124,7 +124,7 @@ module.exports.commissionTypeValidation = async (req, resp, next) => {
   const id = req.body.commission_type;
   if (mongoose.isValidObjectId(id)) {
     const commissionType = await CommissionTypeModal.findOne({
-      _id: id,
+      id: id,
     });
     if (commissionType) {
       next();
@@ -154,7 +154,7 @@ module.exports.commissionValidation = async (req, resp, next) => {
   const id = req.body.commission;
   if (mongoose.isValidObjectId(id)) {
     const commission = await CommissionModal.findOne({
-      _id: id,
+      id: id,
     });
     if (commission) {
       next();
