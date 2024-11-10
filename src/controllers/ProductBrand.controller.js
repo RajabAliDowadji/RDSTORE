@@ -4,59 +4,27 @@ const { STATUS } = require("../constants/Constants");
 const { apiResponse } = require("../helpers/apiResponse");
 const { errorResponse } = require("../helpers/errorResponse");
 
-module.exports.getProductBrands = async (req, resp, next) => {
-  const productBrands = await ProductBrandModal.find();
-  if (productBrands) {
-    return resp
-      .status(STATUS.SUCCESS)
-      .send(
-        apiResponse(
-          STATUS.SUCCESS,
-          PROD_BRAND_API.PROD_BRAND_SUCCESS.message,
-          productBrands
-        )
-      );
-  } else {
-    return resp
-      .status(STATUS.INTERNAL_SERVER)
-      .send(errorResponse(STATUS.INTERNAL_SERVER, COMMON.SERVER_ERROR.message));
-  }
-};
+module.exports.createBrand = async (req, resp) => {
+  const { name, image, website, country } = req.body;
 
-module.exports.getProductBrandById = async (req, resp, next) => {
-  const productBrandId = req.params.id;
   const productBrand = await ProductBrandModal.findOne({
-    _id: productBrandId,
+    name: name,
+    website: website,
   });
-  if (productBrand) {
-    return resp
-      .status(STATUS.SUCCESS)
-      .send(
-        apiResponse(
-          STATUS.SUCCESS,
-          PROD_BRAND_API.PROD_BRAND_SUCCESS.message,
-          productBrand
-        )
-      );
-  } else {
-    return resp
-      .status(STATUS.INTERNAL_SERVER)
-      .send(errorResponse(STATUS.INTERNAL_SERVER, COMMON.SERVER_ERROR.message));
-  }
-};
-
-module.exports.addProductBrand = async (req, resp, next) => {
-  const brand_name = req.body.brand_name;
-
-  const prodctBrand = await ProductBrandModal.findOne({
-    brand_name: brand_name,
-  });
-  if (!prodctBrand) {
-    const prodctBrand = new ProductBrandModal({
-      brand_name: brand_name,
+  if (!productBrand) {
+    const productBrand = new ProductBrandModal({
+      name: name,
+      image: image,
+      country: country,
+      website: website,
     });
 
-    await prodctBrand.save();
+    await productBrand.save();
+
+    const productBrandResponse = {
+      ...productBrand.toObject(),
+      _id: undefined,
+    };
 
     return resp
       .status(STATUS.CREATED)
@@ -64,7 +32,7 @@ module.exports.addProductBrand = async (req, resp, next) => {
         apiResponse(
           STATUS.CREATED,
           PROD_BRAND_API.PROD_BRAND_CREATE.message,
-          prodctBrand
+          productBrandResponse
         )
       );
   } else {
@@ -79,16 +47,25 @@ module.exports.addProductBrand = async (req, resp, next) => {
   }
 };
 
-module.exports.updateProductBrand = async (req, resp, next) => {
-  const productBrandId = req.params.id;
-  const brand_name = req.body.brand_name;
+module.exports.updateBrand = async (req, resp) => {
+  const brandId = req.params.id;
+  const { name, image, website, country } = req.body;
   const productBrand = await ProductBrandModal.findOne({
-    _id: productBrandId,
+    id: brandId,
   });
+
   if (productBrand) {
-    productBrand.brand_name = brand_name;
+    productBrand.name = name;
+    productBrand.image = image;
+    productBrand.website = website;
+    productBrand.country = country;
 
     await productBrand.save();
+
+    const productBrandResponse = {
+      ...productBrand.toObject(),
+      _id: undefined,
+    };
 
     return resp
       .status(STATUS.SUCCESS)
@@ -96,7 +73,7 @@ module.exports.updateProductBrand = async (req, resp, next) => {
         apiResponse(
           STATUS.SUCCESS,
           PROD_BRAND_API.PROD_BRAND_UPDATE.message,
-          productBrand
+          productBrandResponse
         )
       );
   } else {
@@ -108,13 +85,20 @@ module.exports.updateProductBrand = async (req, resp, next) => {
   }
 };
 
-module.exports.deleteProductBrand = async (req, resp, next) => {
-  const productBrandId = req.params.id;
+module.exports.deleteBrand = async (req, resp) => {
+  const brandId = req.params.id;
   const productBrand = await ProductBrandModal.findOne({
-    _id: productBrandId,
+    id: brandId,
   });
   if (productBrand) {
-    await ProductBrandModal.findByIdAndRemove({ _id: productBrandId });
+    productBrand.activity = {
+      ...productBrand.activity,
+      is_deleted: true,
+      is_active: false,
+    };
+
+    await productBrand.save();
+
     return resp
       .status(STATUS.SUCCESS)
       .send(
@@ -126,5 +110,24 @@ module.exports.deleteProductBrand = async (req, resp, next) => {
       .send(
         errorResponse(STATUS.BAD, PROD_BRAND_API.PROD_BRAND_NOT_FOUND.message)
       );
+  }
+};
+
+module.exports.getBrands = async (req, resp) => {
+  const productBrands = await ProductBrandModal.find().populate("image");
+  if (productBrands) {
+    return resp
+      .status(STATUS.SUCCESS)
+      .send(
+        apiResponse(
+          STATUS.SUCCESS,
+          PROD_BRAND_API.PROD_BRAND_SUCCESS.message,
+          productBrands
+        )
+      );
+  } else {
+    return resp
+      .status(STATUS.INTERNAL_SERVER)
+      .send(errorResponse(STATUS.INTERNAL_SERVER, COMMON.SERVER_ERROR.message));
   }
 };

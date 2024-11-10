@@ -2,63 +2,38 @@ const express = require("express");
 const { body } = require("express-validator");
 
 const {
-  addProductBrand,
-  getProductBrands,
-  updateProductBrand,
-  deleteProductBrand,
-  getProductBrandById,
+  createBrand,
+  updateBrand,
+  deleteBrand,
+  getBrands,
 } = require("../controllers/ProductBrand.controller");
-
-const { idValidation } = require("../middlewares/IdValidation");
-
-const { tokenValidation } = require("../validators/tokenValidators");
-
-const { rdAdminTokenValidation } = require("../validators/userTypeValidators");
 
 const { validation } = require("../validators/Validators");
 
 const router = express.Router();
 
-router.get(
-  "/brands",
-  tokenValidation,
-  rdAdminTokenValidation,
-  getProductBrands
-);
-
-router.get(
-  "/brand/:id",
-  idValidation,
-  tokenValidation,
-  rdAdminTokenValidation,
-  getProductBrandById
-);
-
 router.post(
-  "/brand/create",
-  tokenValidation,
-  rdAdminTokenValidation,
-  [body("brand_name").isString().trim().notEmpty()],
+  "/create/brand",
+  [
+    body("name").isString().trim().notEmpty(),
+    body("image").isString().trim().notEmpty(),
+  ],
   validation,
-  addProductBrand
+  createBrand
 );
 
 router.put(
-  "/brand/:id",
-  idValidation,
-  tokenValidation,
-  rdAdminTokenValidation,
-  [body("brand_name").isString().trim().notEmpty()],
+  "/update/brand/:id",
+  [
+    body("name").isString().trim().notEmpty(),
+    body("image").isString().trim().notEmpty(),
+  ],
   validation,
-  updateProductBrand
+  updateBrand
 );
 
-router.delete(
-  "/brand/:id",
-  idValidation,
-  tokenValidation,
-  rdAdminTokenValidation,
-  deleteProductBrand
-);
+router.delete("/delete/brand/:id", deleteBrand);
+
+router.get("/get/brands", getBrands);
 
 module.exports = router;
