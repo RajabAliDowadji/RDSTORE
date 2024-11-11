@@ -1,0 +1,16 @@
+RDSTORE
+BRAND GUIDE
+brand
+Color
+#fe7332
+Font
+Viga-Regular
+Viga-Regular
+icon
+Primary
+#79c01d
+Secondary
+#fe7332
+background
+Color
+transparent

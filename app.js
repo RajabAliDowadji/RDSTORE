@@ -69,8 +69,8 @@ app.use(ROUTES.ROOT, superAdminAuthValidation, ShopRoutes);
 app.use(ROUTES.ROOT, superAdminAuthValidation, PlaceRoutes);
 app.use(ROUTES.ROOT, superAdminAuthValidation, ShopProfile);
 app.use(ROUTES.ROOT, superAdminAuthValidation, MerchantBadges);
+app.use(ROUTES.ROOT, superAdminAuthValidation, ProductBrandRoutes);
 app.use(ROUTES.ROOT, superAdminAuthValidation, ProductCategoriesRoutes);
 app.use(ROUTES.ROOT, superAdminAuthValidation, ProductSubCategoriesRoutes);
-app.use(ROUTES.ROOT, superAdminAuthValidation, ProductBrandRoutes);
 
 app.listen(5000);
