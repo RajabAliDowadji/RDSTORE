@@ -129,6 +129,36 @@ module.exports = {
       status: 400,
     },
   },
+  PROD_PROF_API: {
+    PROD_PROF_SUCCESS: {
+      message: "Ok",
+      status: 200,
+    },
+    PROD_PROF_CREATE: {
+      message: "Product profile created successfully.",
+      status: 201,
+    },
+    PROD_PROF_UPDATE: {
+      message: "Product profile updated successfully.",
+      status: 200,
+    },
+    PROD_PROF_ALREADY_REGISTER: {
+      message: "Product profile already existed.",
+      status: 400,
+    },
+    PROD_PROF_DELETE: {
+      message: "Product profile deleted successfully.",
+      status: 200,
+    },
+    PROD_PROF_NOT_FOUND: {
+      message: "Product profile not found.",
+      status: 400,
+    },
+    PROD_PROF_INVALID_ID: {
+      message: "Please provide valid Product profile id.",
+      status: 400,
+    },
+  },
   PROD_API: {
     PROD_SUCCESS: {
       message: "Ok",

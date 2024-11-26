@@ -10,6 +10,7 @@ const ShopRoutes = require("./src/routes/Shop.route");
 const ProductCategoriesRoutes = require("./src/routes/ProductCategories.route");
 const ProductSubCategoriesRoutes = require("./src/routes/ProductSubCategories.route");
 const ProductBrandRoutes = require("./src/routes/ProductBrand.route");
+const ProductProfilesRoutes = require("./src/routes/ProductProfile.route");
 const ProductRoutes = require("./src/routes/Product.route");
 const ProductRatingRoutes = require("./src/routes/ProductRating.route");
 const CommissionTypeRoutes = require("./src/routes/CommissionType.route");
@@ -70,6 +71,7 @@ app.use(ROUTES.ROOT, superAdminAuthValidation, PlaceRoutes);
 app.use(ROUTES.ROOT, superAdminAuthValidation, ShopProfile);
 app.use(ROUTES.ROOT, superAdminAuthValidation, MerchantBadges);
 app.use(ROUTES.ROOT, superAdminAuthValidation, ProductBrandRoutes);
+app.use(ROUTES.ROOT, superAdminAuthValidation, ProductProfilesRoutes);
 app.use(ROUTES.ROOT, superAdminAuthValidation, ProductCategoriesRoutes);
 app.use(ROUTES.ROOT, superAdminAuthValidation, ProductSubCategoriesRoutes);
 
