@@ -74,5 +74,6 @@ app.use(ROUTES.ROOT, superAdminAuthValidation, ProductBrandRoutes);
 app.use(ROUTES.ROOT, superAdminAuthValidation, ProductProfilesRoutes);
 app.use(ROUTES.ROOT, superAdminAuthValidation, ProductCategoriesRoutes);
 app.use(ROUTES.ROOT, superAdminAuthValidation, ProductSubCategoriesRoutes);
+app.use(ROUTES.ROOT, ProductRoutes);
 
 app.listen(5000);

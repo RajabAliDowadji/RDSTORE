@@ -3,78 +3,90 @@ const Schema = mongoose.Schema;
 
 const ProductSchema = Schema(
   {
-    product_title: {
+    id: {
       type: String,
-      required: true,
     },
-    product_size: {
-      type: String,
-      required: true,
-    },
-    product_MRP_price: {
-      type: Number,
-      required: true,
-    },
-    product_price: {
-      type: Number,
-      required: true,
-    },
-    product_description: {
-      type: String,
-      required: true,
-    },
-    product_images: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "file",
-        required: false,
-      },
-    ],
-    commission: {
+    profile: {
       type: Schema.Types.ObjectId,
-      ref: "commission",
-      required: false,
-      default: null,
+      ref: "product_profile",
+      required: true,
     },
-    rating: {
-      type: Schema.Types.ObjectId,
-      ref: "product_rating",
-      required: false,
-      default: null,
-    },
-    product_category: {
+    category: {
       type: Schema.Types.ObjectId,
       ref: "product_categories",
       required: true,
     },
-    product_sub_category: {
+    sub_category: {
       type: Schema.Types.ObjectId,
       ref: "product_sub_categories",
       required: true,
     },
-    product_brand: {
+    brand: {
       type: Schema.Types.ObjectId,
       ref: "product_brand",
-      required: true,
-    },
-    product_rating: {
-      type: Schema.Types.ObjectId,
-      ref: "product_rating",
       required: false,
-      default: null,
     },
-    is_published: {
-      type: Boolean,
-      required: true,
-      default: false,
+    ratings: {
+      average_rating: {
+        type: Number,
+        min: 0,
+        max: 5,
+        default: 0,
+      },
+      reviews_count: {
+        type: Number,
+        default: 0,
+      },
     },
-    is_vegetarian: {
-      type: Boolean,
-      required: false,
-      default: true,
+    units: [
+      {
+        unit_type: {
+          type: String,
+          enum: ["kg", "g", "pieces"],
+          required: true,
+        },
+        weight: {
+          type: Number,
+          required: true,
+        },
+        total_price: {
+          type: Number,
+          required: true,
+        },
+        sales_price: {
+          type: Number,
+        },
+      },
+    ],
+    activity: {
+      created_at: {
+        type: Date,
+        default: Date.now,
+      },
+      updated_at: {
+        type: Date,
+      },
+      is_active: {
+        type: Boolean,
+        default: false,
+      },
+      is_deleted: {
+        type: Boolean,
+        default: false,
+      },
     },
   },
-  { timestamps: true, versionKey: false }
+  { versionKey: false }
 );
+
+ProductSchema.pre("save", function (next) {
+  if (!this.id) {
+    this.id = this._id.toString();
+  }
+
+  this.activity.updated_at = new Date();
+
+  next();
+});
 
 module.exports = mongoose.model("product", ProductSchema);

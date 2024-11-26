@@ -1,121 +1,41 @@
 const ProductModal = require("../models/Product.modal");
-const CommissionModal = require("../models/Commission.modal");
-const ProductRatingModal = require("../models/ProductRating.modal");
 const { PROD_API, COMMON } = require("../constants/Product.messages");
 const { STATUS, ACCOUNT_TYPE } = require("../constants/Constants");
 const { apiResponse } = require("../helpers/apiResponse");
 const { errorResponse } = require("../helpers/errorResponse");
 
-module.exports.getProducts = async (req, resp, next) => {
-  const product_category = req.query.product_category;
-  const product_sub_category = req.query.product_sub_category;
-  let queryData = {};
-  if (product_category && product_sub_category) {
-    queryData = {
-      $and: [
-        { product_sub_category: product_sub_category },
-        { product_category: product_category },
-      ],
-    };
-  } else if (product_category) {
-    queryData = {
-      $and: [{ product_category: product_category, is_published: true }],
-    };
-  }
-  const products = await ProductModal.find({ is_published: true, ...queryData })
-    .populate("product_rating")
-    .populate("product_sub_category")
-    .populate("product_brand")
-    .populate("product_category")
-    .populate("product_images");
-  if (products) {
-    return resp
-      .status(STATUS.SUCCESS)
-      .send(
-        apiResponse(STATUS.SUCCESS, PROD_API.PROD_SUCCESS.message, products)
-      );
-  } else {
-    return resp
-      .status(STATUS.INTERNAL_SERVER)
-      .send(errorResponse(STATUS.INTERNAL_SERVER, COMMON.SERVER_ERROR.message));
-  }
-};
-
-module.exports.getAdminProducts = async (req, resp, next) => {
-  const product_category = req.query.product_category;
-  const product_sub_category = req.query.product_sub_category;
-  let queryData = {};
-  if (product_category && product_sub_category) {
-    queryData = {
-      $and: [
-        { product_sub_category: product_sub_category },
-        { product_category: product_category },
-      ],
-    };
-  } else if (product_category) {
-    queryData = {
-      $and: [{ product_category: product_category }],
-    };
-  }
-  const products = await ProductModal.find(queryData)
-    .populate("product_rating")
-    .populate("product_sub_category")
-    .populate("product_brand")
-    .populate("product_category")
-    .populate("product_images");
-  if (products) {
-    return resp
-      .status(STATUS.SUCCESS)
-      .send(
-        apiResponse(STATUS.SUCCESS, PROD_API.PROD_SUCCESS.message, products)
-      );
-  } else {
-    return resp
-      .status(STATUS.INTERNAL_SERVER)
-      .send(errorResponse(STATUS.INTERNAL_SERVER, COMMON.SERVER_ERROR.message));
-  }
-};
-
-module.exports.getProductById = async (req, resp, next) => {
-  const productId = req.params.id;
-  const product = await ProductModal.findOne({ _id: productId })
-    .populate("product_sub_category")
-    .populate("product_brand")
-    .populate("product_category")
-    .populate("product_images")
-    .populate("product_rating");
-  if (product) {
-    return resp
-      .status(STATUS.SUCCESS)
-      .send(
-        apiResponse(STATUS.SUCCESS, PROD_API.PROD_SUCCESS.message, product)
-      );
-  } else {
-    return resp
-      .status(STATUS.INTERNAL_SERVER)
-      .send(errorResponse(STATUS.INTERNAL_SERVER, COMMON.SERVER_ERROR.message));
-  }
-};
-
-module.exports.addProduct = async (req, resp, next) => {
-  const { product_title, product_price, product_brand } = req.body;
+module.exports.addProduct = async (req, resp) => {
+  const { profile, category, sub_category, brand, units } = req.body;
   const product = await ProductModal.findOne({
-    product_title,
-    product_price,
-    product_brand,
+    profile,
   });
   if (!product) {
-    const productmodal = new ProductModal({
-      ...req.body,
-      is_published: false,
+    const productModal = new ProductModal({
+      profile,
+      category,
+      sub_category,
+      brand,
+      units,
+      activity: {
+        is_active: req.role === ACCOUNT_TYPE.SUPER_ADMIN,
+      },
     });
 
-    await productmodal.save();
+    await productModal.save();
+
+    const productResponse = {
+      ...productModal.toObject(),
+      _id: undefined,
+    };
 
     return resp
       .status(STATUS.CREATED)
       .send(
-        apiResponse(STATUS.CREATED, PROD_API.PROD_CREATE.message, productmodal)
+        apiResponse(
+          STATUS.CREATED,
+          PROD_API.PROD_CREATE.message,
+          productResponse
+        )
       );
   } else {
     return resp
@@ -124,44 +44,37 @@ module.exports.addProduct = async (req, resp, next) => {
   }
 };
 
-module.exports.updateProduct = async (req, resp, next) => {
+module.exports.updateProduct = async (req, resp) => {
   const productId = req.params.id;
-  const {
-    product_title,
-    product_price,
-    product_MRP_price,
-    product_description,
-    product_images,
-    isVegetarian,
-    product_category,
-    product_sub_category,
-    product_brand,
-    product_size,
-    rating,
-    inventory,
-    commission,
-  } = req.body;
-  const product = await ProductModal.findOne({ _id: productId });
+  const { profile, category, sub_category, brand, units } = req.body;
+  const product = await ProductModal.findOne({ id: productId });
   if (product) {
-    product.product_title = product_title;
-    product.product_price = product_price;
-    product.product_MRP_price = product_MRP_price;
-    product.product_description = product_description;
-    product.product_images = product_images;
-    product.isVegetarian = isVegetarian;
-    product.rating = rating;
-    product.inventory = inventory;
-    product.product_category = product_category;
-    product.product_sub_category = product_sub_category;
-    product.product_brand = product_brand;
-    product.product_size = product_size;
-    product.commission = commission;
-    product.is_published = false;
+    product.profile = profile;
+    product.category = category;
+    product.brand = brand;
+    product.sub_category = sub_category;
+    product.units = units;
+    product.activity = {
+      ...product.activity,
+      is_active: req.role === ACCOUNT_TYPE.SUPER_ADMIN,
+    };
+
     await product.save();
+
+    const productResponse = {
+      ...product.toObject(),
+      _id: undefined,
+    };
 
     return resp
       .status(STATUS.SUCCESS)
-      .send(apiResponse(STATUS.SUCCESS, PROD_API.PROD_UPDATE.message, product));
+      .send(
+        apiResponse(
+          STATUS.SUCCESS,
+          PROD_API.PROD_UPDATE.message,
+          productResponse
+        )
+      );
   } else {
     return resp
       .status(STATUS.BAD)
@@ -169,18 +82,37 @@ module.exports.updateProduct = async (req, resp, next) => {
   }
 };
 
-module.exports.deleteProduct = async (req, resp, next) => {
-  const productId = req.params.id;
-  const product = await ProductModal.findOne({ _id: productId });
-  if (product) {
-    await CommissionModal.findOneAndDelete({
-      product: productId,
-    });
-    await ProductRatingModal.findOneAndDelete({
-      product: productId,
-    });
+module.exports.getProducts = async (req, resp) => {
+  const products = await ProductModal.find()
+    .populate("profile")
+    .populate("category")
+    .populate("brand")
+    .populate("sub_category");
 
-    await ProductModal.findByIdAndRemove({ _id: productId });
+  if (products) {
+    return resp
+      .status(STATUS.SUCCESS)
+      .send(
+        apiResponse(STATUS.SUCCESS, PROD_API.PROD_SUCCESS.message, products)
+      );
+  } else {
+    return resp
+      .status(STATUS.INTERNAL_SERVER)
+      .send(errorResponse(STATUS.INTERNAL_SERVER, COMMON.SERVER_ERROR.message));
+  }
+};
+
+module.exports.deleteProduct = async (req, resp) => {
+  const productId = req.params.id;
+  const product = await ProductModal.findOne({ id: productId });
+  if (product) {
+    product.activity = {
+      ...product.activity,
+      is_deleted: true,
+      is_active: false,
+    };
+
+    await product.save();
 
     return resp
       .status(STATUS.SUCCESS)

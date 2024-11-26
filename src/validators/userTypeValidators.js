@@ -32,8 +32,8 @@ module.exports.rdAdminTokenValidation = async (req, resp, next) => {
 
 module.exports.adminTokenValidation = async (req, resp, next) => {
   if (
-    req.user_type != ACCOUNT_TYPE.SUPER_ADMIN &&
-    req.user_type != ACCOUNT_TYPE.SHOP_ADMIN
+    req.role != ACCOUNT_TYPE.SUPER_ADMIN &&
+    req.role != ACCOUNT_TYPE.SHOP_ADMIN
   ) {
     return resp
       .status(STATUS.UNAUTHORIZE)
