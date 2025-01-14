@@ -14,9 +14,9 @@ const ProductProfilesRoutes = require("./src/routes/ProductProfile.route");
 const ProductRoutes = require("./src/routes/Product.route");
 const ImageUploadRoutes = require("./src/routes/S3Bucket.route");
 const UserRoutes = require("./src/routes/User.route");
-
-const MerchantBadges = require("./src/routes/MerchantBadge.route");
-const ShopProfile = require("./src/routes/ShopProfile.route");
+const MerchantBadgesRoutes = require("./src/routes/MerchantBadge.route");
+const ShopProfileRoutes = require("./src/routes/ShopProfile.route");
+const DiscountRoutes = require("./src/routes/Discount.route");
 // Routes Import End
 
 // Constant Import Start
@@ -36,9 +36,10 @@ app.use(ROUTES.ROOT, UserRoutes);
 app.use(ROUTES.ROOT, ImageUploadRoutes);
 app.use(ROUTES.ROOT, superAdminAuthValidation, ShopRoutes);
 app.use(ROUTES.ROOT, superAdminAuthValidation, PlaceRoutes);
-app.use(ROUTES.ROOT, superAdminAuthValidation, ShopProfile);
-app.use(ROUTES.ROOT, superAdminAuthValidation, MerchantBadges);
+app.use(ROUTES.ROOT, superAdminAuthValidation, DiscountRoutes);
+app.use(ROUTES.ROOT, superAdminAuthValidation, ShopProfileRoutes);
 app.use(ROUTES.ROOT, superAdminAuthValidation, ProductBrandRoutes);
+app.use(ROUTES.ROOT, superAdminAuthValidation, MerchantBadgesRoutes);
 app.use(ROUTES.ROOT, superAdminAuthValidation, ProductProfilesRoutes);
 app.use(ROUTES.ROOT, superAdminAuthValidation, ProductCategoriesRoutes);
 app.use(ROUTES.ROOT, superAdminAuthValidation, ProductSubCategoriesRoutes);
