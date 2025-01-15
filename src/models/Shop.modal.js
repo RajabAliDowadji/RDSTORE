@@ -35,14 +35,17 @@ const ShopSchema = Schema(
     totalDeductions: {
       type: Number,
       default: 0,
+      // Tracks the total amount of deductions (possibly platform fees, commissions, refunds, etc.) that have been subtracted from the shop’s earnings.
     },
     netEarnings: {
       type: Number,
       default: 0,
+      // This is the net amount that the shop has earned after all deductions (platform commission, returns, fees, etc.). It's essentially the shop’s take-home amount from all their sales.
     },
     commissionAmount: {
       type: Number,
       default: 0,
+      // This field tracks the commission amount that the platform (you, as the admin) will receive for the sales made by the shop. It helps in calculating platform revenue.
     },
     currency: {
       type: String,
