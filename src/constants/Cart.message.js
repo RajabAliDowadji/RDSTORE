@@ -15,31 +15,31 @@ module.exports = {
       status: 200,
     },
     CART_CREATE: {
-      message: "Product added successfully.",
+      message: "Cart added successfully.",
       status: 201,
     },
     CART_REMOVE: {
-      message: "Product remove successfully.",
+      message: "Cart remove successfully.",
       status: 201,
     },
     CART_UPDATE: {
-      message: "Product updated successfully.",
+      message: "Cart updated successfully.",
       status: 200,
     },
     CART_ALREADY_REGISTER: {
-      message: "Product already existed.",
+      message: "Cart already existed.",
       status: 400,
     },
     CART_DELETE: {
-      message: "Product deleted successfully.",
+      message: "Cart item deleted successfully.",
       status: 200,
     },
     CART_NOT_FOUND: {
-      message: "Product not found.",
+      message: "Cart not found.",
       status: 400,
     },
     CART_INVALID_ID: {
-      message: "Please provide valid Product id.",
+      message: "Please provide valid Cart id.",
       status: 400,
     },
   },

@@ -40,18 +40,19 @@ const ProductSchema = Schema(
     },
     units: [
       {
-        unit_type: {
+        id: {
+          type: Schema.Types.ObjectId,
+          default: () => new mongoose.Types.ObjectId(),
+        },
+        type: {
           type: String,
           enum: ["kg", "g", "pieces"],
-          required: true,
         },
-        weight: {
+        number: {
           type: Number,
-          required: true,
         },
         total_price: {
           type: Number,
-          required: true,
         },
         sales_price: {
           type: Number,

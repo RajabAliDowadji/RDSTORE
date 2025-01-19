@@ -189,32 +189,32 @@ module.exports = {
       status: 400,
     },
   },
-  PROD_QTY_API: {
-    PROD_QTY_SUCCESS: {
+  PROD_UNIT_API: {
+    PROD_UNIT_SUCCESS: {
       message: "Ok",
       status: 200,
     },
-    PROD_QTY_CREATE: {
-      message: "Product quantity added successfully.",
+    PROD_UNIT_CREATE: {
+      message: "Product unit added successfully.",
       status: 201,
     },
-    PROD_QTY_UPDATE: {
-      message: "Product quantity updated successfully.",
+    PROD_UNIT_UPDATE: {
+      message: "Product unit updated successfully.",
       status: 200,
     },
-    PROD_QTY_ALREADY_REGISTER: {
-      message: "Product already existed.",
+    PROD_UNIT_ALREADY_REGISTER: {
+      message: "Product unit already existed.",
       status: 400,
     },
-    PROD_QTY_DELETE: {
-      message: "Product quantity deleted successfully.",
+    PROD_UNIT_DELETE: {
+      message: "Product unit deleted successfully.",
       status: 200,
     },
-    PROD_QTY_NOT_FOUND: {
+    PROD_UNIT_NOT_FOUND: {
       message: "Product not found.",
       status: 400,
     },
-    PROD_QTY_INVALID_ID: {
+    PROD_UNIT_INVALID_ID: {
       message: "Please provide valid Product id.",
       status: 400,
     },

@@ -12,6 +12,7 @@ const ProductSubCategoriesRoutes = require("./src/routes/ProductSubCategories.ro
 const ProductBrandRoutes = require("./src/routes/ProductBrand.route");
 const ProductProfilesRoutes = require("./src/routes/ProductProfile.route");
 const ProductRoutes = require("./src/routes/Product.route");
+const CartRoutes = require("./src/routes/Cart.route");
 const ImageUploadRoutes = require("./src/routes/S3Bucket.route");
 const UserRoutes = require("./src/routes/User.route");
 const MerchantBadgesRoutes = require("./src/routes/MerchantBadge.route");
@@ -46,5 +47,6 @@ app.use(ROUTES.ROOT, superAdminAuthValidation, ProductProfilesRoutes);
 app.use(ROUTES.ROOT, superAdminAuthValidation, ProductCategoriesRoutes);
 app.use(ROUTES.ROOT, superAdminAuthValidation, ProductSubCategoriesRoutes);
 app.use(ROUTES.ROOT, ProductRoutes);
+app.use(ROUTES.ROOT, CartRoutes);
 
 app.listen(5000);

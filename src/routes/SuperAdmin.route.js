@@ -37,7 +37,7 @@ router.get("/get/shops/:id", getAdminShops);
 
 router.delete("/delete/admin/:id", deleteAdmin);
 
-router.post(
+router.delete(
   "/delete/shop/",
   [
     body("user_id").isString().trim().notEmpty(),
