@@ -20,6 +20,7 @@ const ShopProfileRoutes = require("./src/routes/ShopProfile.route");
 const SuperAdminRoutes = require("./src/routes/SuperAdmin.route");
 const DiscountRoutes = require("./src/routes/Discount.route");
 const OrderRoutes = require("./src/routes/Order.route");
+const AddressRoutes = require("./src/routes/Address.route");
 // Routes Import End
 
 // Constant Import Start
@@ -39,6 +40,7 @@ app.use(ROUTES.ROOT, UserRoutes);
 app.use(ROUTES.ROOT, CartRoutes);
 app.use(ROUTES.ROOT, OrderRoutes);
 app.use(ROUTES.ROOT, ProductRoutes);
+app.use(ROUTES.ROOT, AddressRoutes);
 app.use(ROUTES.ROOT, ImageUploadRoutes);
 app.use(ROUTES.ROOT, superAdminAuthValidation, ShopRoutes);
 app.use(ROUTES.ROOT, superAdminAuthValidation, PlaceRoutes);

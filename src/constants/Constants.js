@@ -11,10 +11,6 @@ module.exports = {
     SUPER_ADMIN: "/rd_admin",
     SUPER_ADMIN_PRODUCT: "/rd_admin/product",
     PRODUCT: "/product",
-    //TODO
-    SHOP_ADMIN: "/shop_admin",
-    ADMIN: "/admin",
-    ADMIN_PRODUCT: "/admin/product",
   },
   ACCOUNT_TYPE: {
     USER: "user",
