@@ -124,6 +124,7 @@ module.exports.addAddress = async (req, resp) => {
       .send(errorResponse(STATUS.INTERNAL_SERVER, COMMON.SERVER_ERROR.message));
   }
 };
+
 // NEED TESTING
 module.exports.updateAddress = async (req, resp) => {
   const userId = req.id;
@@ -172,6 +173,7 @@ module.exports.updateAddress = async (req, resp) => {
       .send(errorResponse(STATUS.INTERNAL_SERVER, COMMON.SERVER_ERROR.message));
   }
 };
+
 // NEED TESTING
 module.exports.deleteAddress = async (req, resp) => {
   const userId = req.id;
