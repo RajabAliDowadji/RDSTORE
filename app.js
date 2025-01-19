@@ -19,6 +19,7 @@ const MerchantBadgesRoutes = require("./src/routes/MerchantBadge.route");
 const ShopProfileRoutes = require("./src/routes/ShopProfile.route");
 const SuperAdminRoutes = require("./src/routes/SuperAdmin.route");
 const DiscountRoutes = require("./src/routes/Discount.route");
+const OrderRoutes = require("./src/routes/Order.route");
 // Routes Import End
 
 // Constant Import Start
@@ -35,6 +36,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(ROUTES.ROOT, UserRoutes);
+app.use(ROUTES.ROOT, CartRoutes);
+app.use(ROUTES.ROOT, OrderRoutes);
+app.use(ROUTES.ROOT, ProductRoutes);
 app.use(ROUTES.ROOT, ImageUploadRoutes);
 app.use(ROUTES.ROOT, superAdminAuthValidation, ShopRoutes);
 app.use(ROUTES.ROOT, superAdminAuthValidation, PlaceRoutes);
@@ -46,7 +50,5 @@ app.use(ROUTES.ROOT, superAdminAuthValidation, MerchantBadgesRoutes);
 app.use(ROUTES.ROOT, superAdminAuthValidation, ProductProfilesRoutes);
 app.use(ROUTES.ROOT, superAdminAuthValidation, ProductCategoriesRoutes);
 app.use(ROUTES.ROOT, superAdminAuthValidation, ProductSubCategoriesRoutes);
-app.use(ROUTES.ROOT, ProductRoutes);
-app.use(ROUTES.ROOT, CartRoutes);
 
 app.listen(5000);

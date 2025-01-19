@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const CartSchema = Schema(
+const OrderSchema = Schema(
   {
     id: {
       type: String,
@@ -28,15 +28,40 @@ const CartSchema = Schema(
             required: true,
           },
         },
-        unitId: {
-          type: String,
-          required: true,
-        },
         price: { type: Number, required: false },
         quantity: { type: Number, required: false, default: 1 },
       },
     ],
-    totalPrice: { type: Number, default: 0 },
+    totalPrice: {
+      type: Number,
+      required: true,
+    },
+    status: {
+      type: String,
+      enum: ["pending", "confirmed", "shipped", "delivered", "cancelled"],
+      default: "pending",
+    },
+    paymentStatus: {
+      type: String,
+      enum: ["pending", "completed", "failed"],
+      default: "pending",
+    },
+    paymentMethod: {
+      type: String,
+      enum: ["credit_card", "paypal", "bank_transfer", "cash_on_delivery"],
+      default: "cash_on_delivery",
+      required: false,
+    },
+    transitionId: {
+      type: String,
+      required: false,
+    },
+    address: {
+      type: Schema.Types.ObjectId,
+      ref: "address",
+      required: false,
+      default: null,
+    },
     activity: {
       created_at: {
         type: Date,
@@ -58,13 +83,7 @@ const CartSchema = Schema(
   { versionKey: false }
 );
 
-CartSchema.methods.clearCart = async function () {
-  this.items = [];
-  this.totalPrice = 0;
-  await this.save();
-};
-
-CartSchema.pre("save", function (next) {
+OrderSchema.pre("save", function (next) {
   if (!this.id) {
     this.id = this._id.toString();
   }
@@ -73,4 +92,4 @@ CartSchema.pre("save", function (next) {
   next();
 });
 
-module.exports = mongoose.model("cart", CartSchema);
+module.exports = mongoose.model("order", OrderSchema);
