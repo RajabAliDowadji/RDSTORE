@@ -16,6 +16,7 @@ const ImageUploadRoutes = require("./src/routes/S3Bucket.route");
 const UserRoutes = require("./src/routes/User.route");
 const MerchantBadgesRoutes = require("./src/routes/MerchantBadge.route");
 const ShopProfileRoutes = require("./src/routes/ShopProfile.route");
+const SuperAdminRoutes = require("./src/routes/SuperAdmin.route");
 const DiscountRoutes = require("./src/routes/Discount.route");
 // Routes Import End
 
@@ -37,6 +38,7 @@ app.use(ROUTES.ROOT, ImageUploadRoutes);
 app.use(ROUTES.ROOT, superAdminAuthValidation, ShopRoutes);
 app.use(ROUTES.ROOT, superAdminAuthValidation, PlaceRoutes);
 app.use(ROUTES.ROOT, superAdminAuthValidation, DiscountRoutes);
+app.use(ROUTES.ROOT, superAdminAuthValidation, SuperAdminRoutes);
 app.use(ROUTES.ROOT, superAdminAuthValidation, ShopProfileRoutes);
 app.use(ROUTES.ROOT, superAdminAuthValidation, ProductBrandRoutes);
 app.use(ROUTES.ROOT, superAdminAuthValidation, MerchantBadgesRoutes);
