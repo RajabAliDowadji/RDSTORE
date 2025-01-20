@@ -37,24 +37,24 @@ router.post(
   addAddress
 );
 
-router.put(
-  "/update/user/address",
-  tokenValidation,
-  [
-    body("streetAddress").isString().trim().notEmpty(),
-    body("place").trim().isLength({ min: 6, max: 6 }),
-    body("address_id").isString().trim().notEmpty(),
-  ],
-  validation,
-  updateAddress
-);
+// router.put(
+//   "/update/user/address",
+//   tokenValidation,
+//   [
+//     body("streetAddress").isString().trim().notEmpty(),
+//     body("place").trim().isLength({ min: 6, max: 6 }),
+//     body("address_id").isString().trim().notEmpty(),
+//   ],
+//   validation,
+//   updateAddress
+// );
 
-router.delete(
-  "/delete/user/address",
-  tokenValidation,
-  [body("address_id").isString().trim().notEmpty()],
-  validation,
-  deleteAddress
-);
+// router.delete(
+//   "/delete/user/address",
+//   tokenValidation,
+//   [body("address_id").isString().trim().notEmpty()],
+//   validation,
+//   deleteAddress
+// );
 
 module.exports = router;

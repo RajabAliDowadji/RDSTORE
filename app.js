@@ -21,6 +21,7 @@ const SuperAdminRoutes = require("./src/routes/SuperAdmin.route");
 const DiscountRoutes = require("./src/routes/Discount.route");
 const OrderRoutes = require("./src/routes/Order.route");
 const AddressRoutes = require("./src/routes/Address.route");
+const CommissionTypeRoutes = require("./src/routes/CommissionType.route");
 // Routes Import End
 
 // Constant Import Start
@@ -49,6 +50,7 @@ app.use(ROUTES.ROOT, superAdminAuthValidation, SuperAdminRoutes);
 app.use(ROUTES.ROOT, superAdminAuthValidation, ShopProfileRoutes);
 app.use(ROUTES.ROOT, superAdminAuthValidation, ProductBrandRoutes);
 app.use(ROUTES.ROOT, superAdminAuthValidation, MerchantBadgesRoutes);
+app.use(ROUTES.ROOT, superAdminAuthValidation, CommissionTypeRoutes);
 app.use(ROUTES.ROOT, superAdminAuthValidation, ProductProfilesRoutes);
 app.use(ROUTES.ROOT, superAdminAuthValidation, ProductCategoriesRoutes);
 app.use(ROUTES.ROOT, superAdminAuthValidation, ProductSubCategoriesRoutes);
