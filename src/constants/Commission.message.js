@@ -1,3 +1,8 @@
+const ProductModal = require("../models/Product.modal");
+const ProductCategoriesModal = require("../models/ProductCategories.modal");
+const ProductSubCategoriesModal = require("../models/ProductSubCategories.modal");
+const ProductBrandModal = require("../models/ProductBrand.modal");
+
 module.exports = {
   COMMON: {
     SERVER_ERROR: {
@@ -65,7 +70,7 @@ module.exports = {
       status: 400,
     },
     COM_INVALID_ID: {
-      message: "Please provide valid Commission id.",
+      message: "Please provide valid id.",
       status: 400,
     },
   },
@@ -94,5 +99,11 @@ module.exports = {
       message: "Please provide valid Admin Commission id.",
       status: 400,
     },
+  },
+  COM_TARGET: {
+    product: ProductModal,
+    product_category: ProductCategoriesModal,
+    product_sub_category: ProductSubCategoriesModal,
+    product_brand: ProductBrandModal,
   },
 };
