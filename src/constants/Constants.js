@@ -7,7 +7,7 @@ module.exports = {
     INTERNAL_SERVER: 500,
   },
   ROUTES: {
-    ROOT: "/api",
+    ROOT: "/rdstore",
     SUPER_ADMIN: "/rd_admin",
     SUPER_ADMIN_PRODUCT: "/rd_admin/product",
     PRODUCT: "/product",
