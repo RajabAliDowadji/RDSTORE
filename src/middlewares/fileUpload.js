@@ -27,7 +27,7 @@ const s3 = new S3Client({
 //multer storage start
 const s3Storage = multerS3({
   s3: s3,
-  bucket: bucketname,
+  bucket: () => `${bucketname}`,
   acl: "public-read",
   contentType: multerS3.AUTO_CONTENT_TYPE,
   metadata: (req, file, cb) => {
