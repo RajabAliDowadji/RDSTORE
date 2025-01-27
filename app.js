@@ -48,6 +48,7 @@ app.use(ROUTES.ROOT, ImageUploadRoutes);
 app.use(ROUTES.ROOT, superAdminAuthValidation, ShopRoutes);
 app.use(ROUTES.ROOT, superAdminAuthValidation, PlaceRoutes);
 app.use(ROUTES.ROOT, superAdminAuthValidation, DiscountRoutes);
+app.use(ROUTES.ROOT, superAdminAuthValidation, CommissionRoutes);
 app.use(ROUTES.ROOT, superAdminAuthValidation, SuperAdminRoutes);
 app.use(ROUTES.ROOT, superAdminAuthValidation, ShopProfileRoutes);
 app.use(ROUTES.ROOT, superAdminAuthValidation, ProductBrandRoutes);
@@ -56,7 +57,6 @@ app.use(ROUTES.ROOT, superAdminAuthValidation, CommissionTypeRoutes);
 app.use(ROUTES.ROOT, superAdminAuthValidation, ProductProfilesRoutes);
 app.use(ROUTES.ROOT, superAdminAuthValidation, ProductCategoriesRoutes);
 app.use(ROUTES.ROOT, superAdminAuthValidation, ProductSubCategoriesRoutes);
-app.use(ROUTES.ROOT, superAdminAuthValidation, CommissionRoutes);
 
 const port = process.env.PORT || 5000;
 app.listen(port);
