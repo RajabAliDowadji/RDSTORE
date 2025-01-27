@@ -35,10 +35,6 @@ const {
 
 const app = express();
 
-app.get("/", (req, resp) => {
-  resp.status(200).send("Hello from RD STORE");
-});
-
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
