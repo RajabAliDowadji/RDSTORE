@@ -1,7 +1,10 @@
 const mongoose = require("mongoose");
 const config = require("../config/default.json");
+require("dotenv").config({ path: process.env.MONGODB_URL });
 
 const mongodbURL = process.env.MONGODB_URL;
+console.log("Abdeali mongodbURL", mongodbURL);
+
 try {
   mongoose.connect(mongodbURL, {
     useNewUrlParser: true,
