@@ -35,6 +35,10 @@ const {
 
 const app = express();
 
+app.post("/", function (req, res) {
+  res.status(200).json({ message: "Welcome to RD STore" });
+});
+
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
