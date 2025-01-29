@@ -1,6 +1,7 @@
 // Package Import Start
 const express = require("express");
 const cors = require("cors");
+require("dotenv").config();
 var bodyParser = require("body-parser");
 // Package Import End
 
